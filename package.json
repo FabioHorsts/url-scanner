@@ -1,0 +1,6 @@
+{
+  "name": "url-scanner",
+  "version": "1.0.0",
+  "description": "Scanner de arquivos por URL com numeração sequencial",
+  "private": true
+}
