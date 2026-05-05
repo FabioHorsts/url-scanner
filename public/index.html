@@ -8,115 +8,123 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #0b0c0e; --surface: #13151a; --surface2: #1c1f27;
-    --border: #2a2d38; --border2: #363a4a; --text: #e8eaf0;
-    --muted: #6b7080; --dim: #3a3e4e;
-    --accent: #4af0a0; --accent-dim: #1a3d2e; --accent-text: #0d1f18;
-    --red: #ff5757; --red-dim: #2a1515;
-    --blue: #5ab4ff; --blue-dim: #0d2540;
-    --yellow: #f0c040; --yellow-dim: #2a2010;
-    --mono: "IBM Plex Mono", monospace; --sans: "IBM Plex Sans", sans-serif;
+    --bg:#0b0c0e;--surface:#13151a;--surface2:#1c1f27;
+    --border:#2a2d38;--border2:#363a4a;--text:#e8eaf0;
+    --muted:#6b7080;--dim:#3a3e4e;
+    --accent:#4af0a0;--accent-dim:#1a3d2e;--accent-text:#0d1f18;
+    --red:#ff5757;--red-dim:#2a1515;
+    --blue:#5ab4ff;--blue-dim:#0d2540;
+    --yellow:#f0c040;--yellow-dim:#2a2010;
+    --mono:"IBM Plex Mono",monospace;--sans:"IBM Plex Sans",sans-serif;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; min-height: 100vh; }
-  header { border-bottom: 1px solid var(--border); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; }
-  .logo-sep { color: var(--dim); margin: 0 0.5rem; }
-  .logo-sub { color: var(--muted); font-weight: 300; font-size: 12px; }
-  .btn-manual { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; padding: 7px 16px; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s; text-transform: uppercase; }
-  .btn-manual:hover { background: var(--surface2); color: var(--text); }
-  .btn-manual.active { background: var(--yellow-dim); color: var(--yellow); border-color: #3a3010; }
-  .page { display: none; }
-  .page.active { display: block; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;min-height:100vh;}
 
-  /* HOME */
-  .home-wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-  .home-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
-  .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-  .series-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; transition: border-color 0.15s; }
-  .series-card:hover { border-color: var(--border2); }
-  .series-name { font-family: var(--mono); font-size: 14px; font-weight: 500; color: var(--accent); margin-bottom: 4px; }
-  .series-url { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-bottom: 1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .series-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
-  .range-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
-  .range-btn { font-family: var(--mono); font-size: 11px; padding: 6px 14px; border-radius: 5px; border: 1px solid var(--border2); background: var(--surface2); color: var(--text); cursor: pointer; transition: all 0.15s; position: relative; min-width: 90px; overflow: hidden; }
-  .range-btn:hover:not(:disabled) { background: var(--accent-dim); color: var(--accent); border-color: #1f4d35; }
-  .range-btn:disabled { cursor: not-allowed; }
-  .range-btn.scanning { color: var(--muted); border-color: var(--border); cursor: not-allowed; }
-  .range-btn.scanning .btn-label { opacity: 0.4; }
-  .range-btn.done-found { background: var(--accent-dim); color: var(--accent); border-color: #1f4d35; }
-  .range-btn.done-found:hover { filter: brightness(1.15); }
-  .range-btn.done-empty { background: var(--red-dim); color: var(--red); border-color: #3a1515; cursor: default; }
-  .btn-bar { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--accent); width: 0%; transition: width 0.3s; }
-  .btn-pct { font-size: 9px; color: var(--muted); margin-left: 4px; }
+  header{border-bottom:1px solid var(--border);padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;}
+  .logo-sep{color:var(--dim);margin:0 .5rem;}
+  .logo-sub{color:var(--muted);font-weight:300;font-size:12px;}
+  .btn-manual{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:7px 16px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;}
+  .btn-manual:hover{background:var(--surface2);color:var(--text);}
+  .btn-manual.active{background:var(--yellow-dim);color:var(--yellow);border-color:#3a3010;}
 
-  /* SCANNER */
-  .scanner-wrap { display: grid; grid-template-columns: 340px 1fr; height: calc(100vh - 57px); }
-  .sidebar { border-right: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; overflow-y: auto; }
-  .section-title { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
-  .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label { font-size: 12px; color: var(--muted); font-family: var(--mono); }
-  .field input { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--mono); font-size: 13px; padding: 9px 12px; width: 100%; transition: border-color 0.15s; }
-  .field input:focus { outline: none; border-color: var(--accent); }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .hint { font-size: 11px; color: var(--dim); font-family: var(--mono); }
-  .source-badge { display: flex; align-items: center; gap: 8px; background: var(--blue-dim); border: 1px solid #1a3a5a; border-radius: 6px; padding: 8px 12px; font-family: var(--mono); font-size: 11px; color: var(--blue); }
-  .source-badge button { margin-left: auto; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; }
-  .source-badge button:hover { color: var(--text); }
-  .btn-row { display: flex; gap: 8px; }
-  .btn { flex: 1; padding: 10px 16px; border-radius: 6px; border: 1px solid var(--border2); font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; transition: all 0.15s; text-transform: uppercase; }
-  .btn-primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
-  .btn-primary:hover { filter: brightness(1.1); }
-  .btn-secondary { background: transparent; color: var(--muted); }
-  .btn-secondary:hover { background: var(--surface2); color: var(--text); }
-  .btn-danger { background: var(--red-dim); color: var(--red); border-color: #3a1515; }
-  .btn-danger:hover { filter: brightness(1.15); }
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .stat-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; }
-  .stat-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
-  .stat-val { font-family: var(--mono); font-size: 22px; font-weight: 500; }
-  .stat-val.green { color: var(--accent); }
-  .stat-val.red { color: var(--red); }
-  .stat-val.blue { color: var(--blue); }
-  .stat-val.plain { color: var(--text); }
-  .progress-track { height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; width: 0%; }
-  .progress-label { font-family: var(--mono); font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
-  .results-panel { display: flex; flex-direction: column; overflow: hidden; }
-  .results-toolbar { border-bottom: 1px solid var(--border); padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-shrink: 0; }
-  .results-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .toolbar-actions { display: flex; gap: 8px; align-items: center; }
-  .filter-btn { font-family: var(--mono); font-size: 11px; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.1s; }
-  .filter-btn.active { background: var(--surface2); color: var(--text); border-color: var(--border2); }
-  .filter-btn:hover { color: var(--text); }
-  .copy-btn { font-family: var(--mono); font-size: 11px; padding: 5px 14px; border-radius: 4px; border: 1px solid var(--accent-dim); background: var(--accent-dim); color: var(--accent); cursor: pointer; transition: all 0.15s; }
-  .copy-btn:hover { filter: brightness(1.2); }
-  .copy-btn:disabled { opacity: 0.3; cursor: not-allowed; filter: none; }
-  .log-list { flex: 1; overflow-y: auto; }
-  .log-list::-webkit-scrollbar { width: 4px; }
-  .log-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
-  .log-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 12px; color: var(--dim); }
-  .log-empty .icon { font-size: 32px; opacity: 0.5; }
-  .log-empty p { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; }
-  .log-item { display: grid; grid-template-columns: 48px 56px 1fr auto; align-items: center; gap: 12px; padding: 10px 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.1s; animation: fadeIn 0.15s ease; }
-  .log-item:hover { background: var(--surface2); }
-  .log-item.hidden { display: none; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
-  .log-num { font-family: var(--mono); font-size: 11px; color: var(--dim); text-align: right; }
-  .log-badge { font-family: var(--mono); font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 4px; text-align: center; }
-  .badge-ok { background: var(--accent-dim); color: var(--accent); border: 1px solid #1f4d35; }
-  .badge-err { background: var(--red-dim); color: var(--red); border: 1px solid #3a1515; }
-  .log-url { font-family: var(--mono); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .log-url a { color: var(--blue); text-decoration: none; }
-  .log-url a:hover { text-decoration: underline; }
-  .log-url.err { color: var(--dim); }
-  .log-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; }
-  @media (max-width: 768px) {
-    .scanner-wrap { grid-template-columns: 1fr; height: auto; }
-    .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
-    .results-panel { min-height: 60vh; }
-    header { padding: 1rem; }
-    .home-wrap { padding: 1.5rem 1rem; }
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* ── HOME ── */
+  .home-wrap{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem;}
+  .home-title{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;}
+  .series-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+  .series-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;transition:border-color .15s;}
+  .series-card:hover{border-color:var(--border2);}
+  .series-name{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--accent);margin-bottom:4px;}
+  .series-url{font-family:var(--mono);font-size:10px;color:var(--dim);margin-bottom:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .series-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .range-buttons{display:flex;flex-wrap:wrap;gap:6px;}
+  .range-btn{font-family:var(--mono);font-size:11px;padding:6px 12px;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;transition:all .15s;position:relative;min-width:88px;overflow:hidden;text-align:center;}
+  .range-btn:hover:not(:disabled){background:var(--accent-dim);color:var(--accent);border-color:#1f4d35;}
+  .range-btn:disabled{cursor:not-allowed;opacity:.5;}
+  .range-btn.scanning{color:var(--muted);border-color:var(--border);cursor:not-allowed;}
+  .range-btn.scanning .btn-label{opacity:.4;}
+  .range-btn.done-found{background:var(--accent-dim);color:var(--accent);border-color:#1f4d35;cursor:pointer;}
+  .range-btn.done-found:hover{filter:brightness(1.15);}
+  .range-btn.done-empty{background:var(--red-dim);color:var(--red);border-color:#3a1515;cursor:default;}
+  .btn-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--accent);width:0%;transition:width .3s;}
+  .btn-pct{font-size:9px;color:var(--muted);margin-left:4px;}
+
+  /* ── EPISODES PANEL ── */
+  .eps-wrap{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem;}
+  .eps-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;}
+  .eps-back{font-family:var(--mono);font-size:11px;padding:7px 16px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.08em;}
+  .eps-back:hover{background:var(--surface2);color:var(--text);}
+  .eps-title{font-family:var(--mono);font-size:13px;color:var(--text);font-weight:500;}
+  .eps-sub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;}
+  .eps-grid{display:flex;flex-wrap:wrap;gap:8px;}
+  .ep-btn{font-family:var(--mono);font-size:12px;font-weight:500;padding:10px 18px;border-radius:6px;border:1px solid #1f4d35;background:var(--accent-dim);color:var(--accent);cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block;}
+  .ep-btn:hover{background:var(--accent);color:var(--accent-text);transform:translateY(-1px);}
+
+  /* ── SCANNER MANUAL ── */
+  .scanner-wrap{display:grid;grid-template-columns:340px 1fr;height:calc(100vh - 57px);}
+  .sidebar{border-right:1px solid var(--border);padding:1.5rem;display:flex;flex-direction:column;gap:1.25rem;overflow-y:auto;}
+  .section-title{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
+  .field{display:flex;flex-direction:column;gap:5px;}
+  .field label{font-size:12px;color:var(--muted);font-family:var(--mono);}
+  .field input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:13px;padding:9px 12px;width:100%;transition:border-color .15s;}
+  .field input:focus{outline:none;border-color:var(--accent);}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+  .hint{font-size:11px;color:var(--dim);font-family:var(--mono);}
+  .btn-row{display:flex;gap:8px;}
+  .btn{flex:1;padding:10px 16px;border-radius:6px;border:1px solid var(--border2);font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;cursor:pointer;transition:all .15s;text-transform:uppercase;}
+  .btn-primary{background:var(--accent);color:var(--accent-text);border-color:var(--accent);}
+  .btn-primary:hover{filter:brightness(1.1);}
+  .btn-secondary{background:transparent;color:var(--muted);}
+  .btn-secondary:hover{background:var(--surface2);color:var(--text);}
+  .btn-danger{background:var(--red-dim);color:var(--red);border-color:#3a1515;}
+  .btn-danger:hover{filter:brightness(1.15);}
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;}
+  .stat-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+  .stat-val{font-family:var(--mono);font-size:22px;font-weight:500;}
+  .stat-val.green{color:var(--accent);}.stat-val.red{color:var(--red);}.stat-val.blue{color:var(--blue);}.stat-val.plain{color:var(--text);}
+  .progress-track{height:3px;background:var(--surface2);border-radius:2px;overflow:hidden;margin-bottom:6px;}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s;width:0%;}
+  .progress-label{font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;}
+  .results-panel{display:flex;flex-direction:column;overflow:hidden;}
+  .results-toolbar{border-bottom:1px solid var(--border);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-shrink:0;}
+  .results-title{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .toolbar-actions{display:flex;gap:8px;align-items:center;}
+  .filter-btn{font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .1s;}
+  .filter-btn.active{background:var(--surface2);color:var(--text);border-color:var(--border2);}
+  .filter-btn:hover{color:var(--text);}
+  .copy-btn{font-family:var(--mono);font-size:11px;padding:5px 14px;border-radius:4px;border:1px solid var(--accent-dim);background:var(--accent-dim);color:var(--accent);cursor:pointer;transition:all .15s;}
+  .copy-btn:hover{filter:brightness(1.2);}
+  .copy-btn:disabled{opacity:.3;cursor:not-allowed;filter:none;}
+  .log-list{flex:1;overflow-y:auto;}
+  .log-list::-webkit-scrollbar{width:4px;}
+  .log-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+  .log-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--dim);}
+  .log-empty .icon{font-size:32px;opacity:.5;}
+  .log-empty p{font-family:var(--mono);font-size:12px;letter-spacing:.08em;}
+  .log-item{display:grid;grid-template-columns:48px 56px 1fr auto;align-items:center;gap:12px;padding:10px 1.5rem;border-bottom:1px solid var(--border);transition:background .1s;animation:fadeIn .15s ease;}
+  .log-item:hover{background:var(--surface2);}
+  .log-item.hidden{display:none;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-3px);}to{opacity:1;transform:none;}}
+  .log-num{font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;}
+  .log-badge{font-family:var(--mono);font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;text-align:center;}
+  .badge-ok{background:var(--accent-dim);color:var(--accent);border:1px solid #1f4d35;}
+  .badge-err{background:var(--red-dim);color:var(--red);border:1px solid #3a1515;}
+  .log-url{font-family:var(--mono);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .log-url a{color:var(--blue);text-decoration:none;}
+  .log-url a:hover{text-decoration:underline;}
+  .log-url.err{color:var(--dim);}
+  .log-meta{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap;}
+
+  @media(max-width:768px){
+    .scanner-wrap{grid-template-columns:1fr;height:auto;}
+    .sidebar{border-right:none;border-bottom:1px solid var(--border);}
+    .results-panel{min-height:60vh;}
+    header{padding:1rem;}
+    .home-wrap,.eps-wrap{padding:1.5rem 1rem;}
   }
 </style>
 </head>
@@ -130,6 +138,7 @@
   <button class="btn-manual" id="btnToggleManual" onclick="toggleManual()">&#9881; Modo manual</button>
 </header>
 
+<!-- HOME -->
 <div class="page active" id="pageHome">
   <div class="home-wrap">
     <div class="home-title">Selecione uma série e o intervalo de episódios</div>
@@ -137,10 +146,22 @@
   </div>
 </div>
 
+<!-- EPISODES PANEL -->
+<div class="page" id="pageEpisodes">
+  <div class="eps-wrap">
+    <div class="eps-header">
+      <button class="eps-back" id="epsBack" onclick="goHome()">&#8592; Voltar</button>
+      <span class="eps-title" id="epsTitle"></span>
+      <span class="eps-sub" id="epsSub"></span>
+    </div>
+    <div class="eps-grid" id="epsGrid"></div>
+  </div>
+</div>
+
+<!-- SCANNER MANUAL -->
 <div class="page" id="pageScanner">
   <div class="scanner-wrap">
     <aside class="sidebar">
-      <div id="sourceBadgeWrap"></div>
       <div>
         <div class="section-title">URL template</div>
         <div class="field">
@@ -164,7 +185,7 @@
           <div class="stat-card"><div class="stat-label">Verificados</div><div class="stat-val blue" id="sChecked">0</div></div>
           <div class="stat-card"><div class="stat-label">Encontrados</div><div class="stat-val green" id="sFound">0</div></div>
           <div class="stat-card"><div class="stat-label">Ausentes</div><div class="stat-val red" id="sNotFound">0</div></div>
-          <div class="stat-card"><div class="stat-label">Progresso</div><div class="stat-val plain" id="sProgress">—</div></div>
+          <div class="stat-card"><div class="stat-label">Progresso</div><div class="stat-val plain" id="sProgress">0%</div></div>
         </div>
       </div>
       <div>
@@ -198,19 +219,19 @@
 </div>
 
 <script>
+/* ══════════════════════════════════════════════
+   SÉRIES — edite aqui para adicionar/remover
+══════════════════════════════════════════════ */
 const SERIES = [
   { name: "Hercai", template: "https://acplay.live/series/Hercai/hercai{n}.mp4", zeros: 3 },
-  { name: "Noiva de Istambu",  template: "https://acplay.live/series/NOIVA/NOIVA{n}.mp4",   zeros: 3 },
-  /* Adicione mais series aqui:
-  { name: "Nome", template: "https://acplay.live/series/NOME/NOME{n}.mp4", zeros: 3 },
-  */
+  { name: "Noiva",  template: "https://acplay.live/series/NOIVA/NOIVA{n}.mp4",   zeros: 3 },
 ];
 
 const RANGES = [
   { label: "1 - 24",    from: 1,   to: 24  },
-  { label: "25 - 49",    from: 25,   to: 49  },
-  { label: "50 - 74", from: 50, to: 74 },
-  { label: "75 - 99",    from: 75,   to: 99  },
+  { label: "25 - 49",   from: 25,  to: 49  },
+  { label: "50 - 74",   from: 50,  to: 74  },
+  { label: "75 - 99",   from: 75,  to: 99  },
   { label: "100 - 124", from: 100, to: 124 },
   { label: "125 - 149", from: 125, to: 149 },
   { label: "150 - 174", from: 150, to: 174 },
@@ -220,13 +241,14 @@ const RANGES = [
   { label: "250 - 274", from: 250, to: 274 },
   { label: "275 - 299", from: 275, to: 299 },
 ];
+/* ════════════════════════════════════════════ */
 
 let currentFilter = "all";
-let manualFound = [];
+let manualFound   = [];
 let manualAborted = false;
 let manualRunning = false;
 
-function pad(n, digits) { return digits > 0 ? String(n).padStart(digits, "0") : String(n); }
+function pad(n, d) { return d > 0 ? String(n).padStart(d, "0") : String(n); }
 function formatSize(b) {
   if (!b) return "";
   if (b > 1048576) return (b/1048576).toFixed(1)+" MB";
@@ -243,7 +265,7 @@ async function fetchCheck(url) {
 
 /* ── Varredura inline no card ── */
 async function scanRange(btn, serie, range) {
-  const card = btn.closest(".series-card");
+  const card    = btn.closest(".series-card");
   const allBtns = card.querySelectorAll(".range-btn");
   allBtns.forEach(b => b.disabled = true);
   btn.disabled = false;
@@ -257,7 +279,7 @@ async function scanRange(btn, serie, range) {
     const url = serie.template.replace(/\{n\}/g, pad(n, serie.zeros));
     const res = await fetchCheck(url);
     checked++;
-    if (res.ok) found.push(url);
+    if (res.ok) found.push({ n, url });
     const pct = Math.round((checked / total) * 100);
     btn.querySelector(".btn-pct").textContent = pct + "%";
     btn.querySelector(".btn-bar").style.width = pct + "%";
@@ -270,50 +292,33 @@ async function scanRange(btn, serie, range) {
   if (found.length > 0) {
     btn.classList.add("done-found");
     btn.querySelector(".btn-label").textContent = found.length + " encontrados";
-    btn.onclick = null;
-    btn.addEventListener("click", () => openResults(serie.name, range, found));
+    btn.addEventListener("click", () => openEpisodes(serie.name, range, found));
   } else {
     btn.classList.add("done-empty");
     btn.querySelector(".btn-label").textContent = "nenhum";
-    btn.onclick = null;
   }
 }
 
-/* ── Abre tela de resultados com lista pronta ── */
-function openResults(serieName, range, found) {
-  document.getElementById("sourceBadgeWrap").innerHTML =
-    '<div class="source-badge"><span>&#9654; ' + serieName + ' &nbsp;&middot;&nbsp; ep ' + range.from + '&ndash;' + range.to + '</span><button onclick="goHome()" title="Voltar">&times;</button></div>';
+/* ── Painel de episódios ── */
+function openEpisodes(serieName, range, found) {
+  document.getElementById("epsTitle").textContent = serieName + "  ·  ep " + range.from + "–" + range.to;
+  document.getElementById("epsSub").textContent   = found.length + " episódio(s) disponível(is)";
 
-  const logList = document.getElementById("logList");
-  logList.innerHTML = "";
-  found.forEach((url, i) => {
-    const item = document.createElement("div");
-    item.className = "log-item";
-    item.dataset.state = "ok";
-    const num = range.from + i;
-    item.innerHTML = '<span class="log-num">#' + num + '</span><span class="log-badge badge-ok">200</span><div class="log-url"><a href="' + url + '" target="_blank" rel="noopener">' + url + '</a></div><span class="log-meta"></span>';
-    logList.appendChild(item);
+  const grid = document.getElementById("epsGrid");
+  grid.innerHTML = "";
+
+  // garante ordem numérica
+  found.sort((a, b) => a.n - b.n).forEach(({ n, url }) => {
+    const a = document.createElement("a");
+    a.className   = "ep-btn";
+    a.href        = url;
+    a.target      = "_blank";
+    a.rel         = "noopener";
+    a.textContent = "EP " + pad(n, 0);
+    grid.appendChild(a);
   });
 
-  document.getElementById("resultsTitle").textContent = found.length + " episódio(s) encontrado(s)";
-  document.getElementById("btnCopy").disabled = false;
-  document.getElementById("btnStart").style.display = "none";
-  document.getElementById("btnStop").style.display = "none";
-  document.getElementById("sFound").textContent = found.length;
-  document.getElementById("sChecked").textContent = range.to - range.from + 1;
-  document.getElementById("sNotFound").textContent = (range.to - range.from + 1) - found.length;
-  document.getElementById("sProgress").textContent = "100%";
-  document.getElementById("progressFill").style.width = "100%";
-  document.getElementById("progressPct").textContent = "100%";
-  document.getElementById("progressFrac").textContent = (range.to-range.from+1) + " / " + (range.to-range.from+1);
-  manualFound = found.slice();
-
-  currentFilter = "ok";
-  document.getElementById("filterAll").classList.remove("active");
-  document.getElementById("filterOk").classList.add("active");
-  document.getElementById("filterErr").classList.remove("active");
-
-  showPage("pageScanner");
+  showPage("pageEpisodes");
 }
 
 /* ── Build home ── */
@@ -321,8 +326,7 @@ function buildHome() {
   const grid = document.getElementById("seriesGrid");
   grid.innerHTML = "";
   SERIES.forEach(serie => {
-    const card = document.createElement("div");
-    card.className = "series-card";
+    const card   = document.createElement("div"); card.className = "series-card";
     const nameEl = document.createElement("div"); nameEl.className = "series-name"; nameEl.textContent = serie.name;
     const urlEl  = document.createElement("div"); urlEl.className  = "series-url";  urlEl.textContent  = serie.template;
     const lbl    = document.createElement("div"); lbl.className    = "series-label"; lbl.textContent   = "intervalo de episódios";
@@ -343,13 +347,8 @@ function buildHome() {
 
 /* ── Navegação ── */
 function toggleManual() {
-  const active = document.getElementById("pageScanner").classList.contains("active") && !document.getElementById("sourceBadgeWrap").querySelector(".source-badge");
-  if (active) { goHome(); return; }
+  if (document.getElementById("pageScanner").classList.contains("active")) { goHome(); return; }
   document.getElementById("btnToggleManual").classList.add("active");
-  document.getElementById("sourceBadgeWrap").innerHTML = "";
-  document.getElementById("urlTemplate").value = "";
-  document.getElementById("btnStart").style.display = "";
-  document.getElementById("btnStop").style.display = "none";
   showPage("pageScanner");
   resetManual();
 }
@@ -368,9 +367,9 @@ function showPage(id) {
 /* ── Scanner manual (1 por vez) ── */
 async function startManualScan() {
   const template = document.getElementById("urlTemplate").value.trim();
-  const from = parseInt(document.getElementById("numFrom").value);
-  const to   = parseInt(document.getElementById("numTo").value);
-  const padding = parseInt(document.getElementById("padding").value);
+  const from     = parseInt(document.getElementById("numFrom").value);
+  const to       = parseInt(document.getElementById("numTo").value);
+  const padding  = parseInt(document.getElementById("padding").value);
   if (!template.includes("{n}")) { alert("A URL deve conter {n}"); return; }
 
   manualRunning = true; manualAborted = false;
@@ -380,7 +379,7 @@ async function startManualScan() {
 
   document.getElementById("logList").innerHTML = "";
   document.getElementById("btnStart").style.display = "none";
-  document.getElementById("btnStop").style.display = "";
+  document.getElementById("btnStop").style.display  = "";
   document.getElementById("btnCopy").disabled = true;
   document.getElementById("resultsTitle").textContent = "varrendo…";
 
@@ -392,20 +391,21 @@ async function startManualScan() {
     if (res.ok) { manualFound.push(url); addManualLog(n, url, true, res.status, res.contentLength); }
     else { notFound++; addManualLog(n, url, false, res.status, null); }
     const pct = Math.round((checked/total)*100);
-    document.getElementById("sChecked").textContent = checked;
-    document.getElementById("sFound").textContent = manualFound.length;
-    document.getElementById("sNotFound").textContent = notFound;
+    document.getElementById("sChecked").textContent   = checked;
+    document.getElementById("sFound").textContent     = manualFound.length;
+    document.getElementById("sNotFound").textContent  = notFound;
     document.getElementById("progressFill").style.width = pct+"%";
-    document.getElementById("progressPct").textContent = pct+"%";
+    document.getElementById("progressPct").textContent  = pct+"%";
     document.getElementById("progressFrac").textContent = checked+" / "+total;
-    document.getElementById("sProgress").textContent = pct+"%";
+    document.getElementById("sProgress").textContent    = pct+"%";
   }
 
   manualRunning = false;
   document.getElementById("btnStart").style.display = "";
-  document.getElementById("btnStop").style.display = "none";
+  document.getElementById("btnStop").style.display  = "none";
   document.getElementById("btnCopy").disabled = manualFound.length === 0;
-  document.getElementById("resultsTitle").textContent = (manualAborted?"interrompido":"concluído")+" — "+manualFound.length+" encontrado(s)";
+  document.getElementById("resultsTitle").textContent =
+    (manualAborted ? "interrompido" : "concluído") + " — " + manualFound.length + " encontrado(s)";
 }
 
 function stopScan() { manualAborted = true; }
@@ -413,15 +413,17 @@ function stopScan() { manualAborted = true; }
 function addManualLog(num, url, ok, status, size) {
   const empty = document.getElementById("emptyState");
   if (empty) empty.remove();
-  const item = document.createElement("div");
-  const hide = currentFilter !== "all" && ((currentFilter==="ok") !== ok);
-  item.className = "log-item" + (hide ? " hidden" : "");
+  const item    = document.createElement("div");
+  const hide    = currentFilter !== "all" && ((currentFilter === "ok") !== ok);
+  item.className    = "log-item" + (hide ? " hidden" : "");
   item.dataset.state = ok ? "ok" : "err";
-  const badge = ok ? '<span class="log-badge badge-ok">'+status+'</span>' : '<span class="log-badge badge-err">' + (status||"ERR") + '</span>';
+  const badge   = ok
+    ? "<span class=\"log-badge badge-ok\">"+status+"</span>"
+    : "<span class=\"log-badge badge-err\">"+(status||"ERR")+"</span>";
   const urlPart = ok
-    ? '<div class="log-url"><a href="'+url+'" target="_blank" rel="noopener">'+url+'</a></div>'
-    : '<div class="log-url err">'+url+'</div>';
-  item.innerHTML = '<span class="log-num">#'+num+'</span>'+badge+urlPart+'<span class="log-meta">' + (ok&&size?formatSize(size):"") + '</span>';
+    ? "<div class=\"log-url\"><a href=\""+url+"\" target=\"_blank\" rel=\"noopener\">"+url+"</a></div>"
+    : "<div class=\"log-url err\">"+url+"</div>";
+  item.innerHTML = "<span class=\"log-num\">#"+num+"</span>"+badge+urlPart+"<span class=\"log-meta\">"+(ok&&size?formatSize(size):"")+"</span>";
   document.getElementById("logList").appendChild(item);
   item.scrollIntoView({ block: "nearest" });
 }
@@ -429,14 +431,15 @@ function addManualLog(num, url, ok, status, size) {
 function resetManual() {
   if (manualRunning) return;
   manualFound = [];
-  document.getElementById("logList").innerHTML = '<div class="log-empty" id="emptyState"><div class="icon">&#8981;</div><p>configure e inicie a varredura</p></div>';
+  document.getElementById("logList").innerHTML =
+    "<div class=\"log-empty\" id=\"emptyState\"><div class=\"icon\">&#8981;</div><p>configure e inicie a varredura</p></div>";
   document.getElementById("btnCopy").disabled = true;
   document.getElementById("resultsTitle").textContent = "aguardando";
   document.getElementById("progressFill").style.width = "0%";
-  document.getElementById("progressPct").textContent = "0%";
+  document.getElementById("progressPct").textContent  = "0%";
   document.getElementById("progressFrac").textContent = "0 / 0";
   ["sChecked","sFound","sNotFound"].forEach(id => document.getElementById(id).textContent = "0");
-  document.getElementById("sProgress").textContent = "—";
+  document.getElementById("sProgress").textContent = "0%";
 }
 
 function setFilter(filter, btn) {
