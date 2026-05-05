@@ -279,17 +279,34 @@ let aborted = false;
 function buildHome() {
   const grid = document.getElementById('seriesGrid');
   grid.innerHTML = '';
-  SERIES.forEach(serie => {
+  SERIES.forEach((serie) => {
     const card = document.createElement('div');
     card.className = 'series-card';
-    const btns = RANGES.map(r =>
-      `<button class="range-btn" onclick="launchScan(${JSON.stringify(serie.name)}, ${JSON.stringify(serie.template)}, ${serie.zeros}, ${r.from}, ${r.to})">${r.label}</button>`
-    ).join('');
-    card.innerHTML = `
-      <div class="series-name">${serie.name}</div>
-      <div class="series-url">${serie.template}</div>
-      <div class="series-label">intervalo de episódios</div>
-      <div class="range-buttons">${btns}</div>`;
+
+    const nameEl = document.createElement('div');
+    nameEl.className = 'series-name';
+    nameEl.textContent = serie.name;
+
+    const urlEl = document.createElement('div');
+    urlEl.className = 'series-url';
+    urlEl.textContent = serie.template;
+
+    const labelEl = document.createElement('div');
+    labelEl.className = 'series-label';
+    labelEl.textContent = 'intervalo de episódios';
+
+    const btnWrap = document.createElement('div');
+    btnWrap.className = 'range-buttons';
+
+    RANGES.forEach(r => {
+      const btn = document.createElement('button');
+      btn.className = 'range-btn';
+      btn.textContent = r.label;
+      btn.addEventListener('click', () => launchScan(serie.name, serie.template, serie.zeros, r.from, r.to));
+      btnWrap.appendChild(btn);
+    });
+
+    card.append(nameEl, urlEl, labelEl, btnWrap);
     grid.appendChild(card);
   });
 }
