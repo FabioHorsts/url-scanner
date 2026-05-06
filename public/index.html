@@ -54,14 +54,31 @@
 
   /* ── EPISODES PANEL ── */
   .eps-wrap{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem;}
-  .eps-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;}
-  .eps-back{font-family:var(--mono);font-size:11px;padding:7px 16px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.08em;}
-  .eps-back:hover{background:var(--surface2);color:var(--text);}
-  .eps-title{font-family:var(--mono);font-size:13px;color:var(--text);font-weight:500;}
-  .eps-sub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;}
+  .panel-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap;}
+  .nav-back{font-family:var(--mono);font-size:11px;padding:7px 16px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}
+  .nav-back:hover{background:var(--surface2);color:var(--text);}
+  .panel-title{font-family:var(--mono);font-size:13px;color:var(--text);font-weight:500;}
+  .panel-sub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;}
   .eps-grid{display:flex;flex-wrap:wrap;gap:8px;}
-  .ep-btn{font-family:var(--mono);font-size:12px;font-weight:500;padding:10px 18px;border-radius:6px;border:1px solid #1f4d35;background:var(--accent-dim);color:var(--accent);cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block;}
+  .ep-btn{font-family:var(--mono);font-size:12px;font-weight:500;padding:10px 18px;border-radius:6px;border:1px solid #1f4d35;background:var(--accent-dim);color:var(--accent);cursor:pointer;transition:all .15s;user-select:none;}
   .ep-btn:hover{background:var(--accent);color:var(--accent-text);transform:translateY(-1px);}
+  .ep-btn.active-ep{background:var(--accent);color:var(--accent-text);}
+
+  /* ── PLAYER ── */
+  .player-page{background:var(--bg);}
+  .player-wrap{max-width:1100px;margin:0 auto;padding:1.5rem;}
+  .player-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap;}
+  .player-title{font-family:var(--mono);font-size:13px;color:var(--text);font-weight:500;flex:1;text-align:center;}
+  .player-box{width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden;position:relative;border:1px solid var(--border);}
+  .player-box video{width:100%;height:100%;display:block;}
+  .player-error{display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:#000;color:var(--muted);font-family:var(--mono);font-size:13px;}
+  .player-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:1rem;flex-wrap:wrap;}
+  .ctrl-btn{font-family:var(--mono);font-size:12px;font-weight:500;padding:10px 24px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;transition:all .15s;letter-spacing:.05em;}
+  .ctrl-btn:hover:not(:disabled){background:var(--surface);color:var(--accent);}
+  .ctrl-btn:disabled{opacity:.3;cursor:not-allowed;}
+  .ctrl-btn.prev-btn{padding:10px 20px;}
+  .ctrl-btn.next-btn{padding:10px 20px;}
+  .ctrl-ep-label{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:90px;text-align:center;}
 
   /* ── SCANNER MANUAL ── */
   .scanner-wrap{display:grid;grid-template-columns:340px 1fr;height:calc(100vh - 57px);}
@@ -124,7 +141,9 @@
     .sidebar{border-right:none;border-bottom:1px solid var(--border);}
     .results-panel{min-height:60vh;}
     header{padding:1rem;}
-    .home-wrap,.eps-wrap{padding:1.5rem 1rem;}
+    .home-wrap,.eps-wrap,.player-wrap{padding:1.25rem 1rem;}
+    .player-controls{gap:6px;}
+    .ctrl-btn{padding:9px 14px;font-size:11px;}
   }
 </style>
 </head>
@@ -149,12 +168,34 @@
 <!-- EPISODES PANEL -->
 <div class="page" id="pageEpisodes">
   <div class="eps-wrap">
-    <div class="eps-header">
-      <button class="eps-back" id="epsBack" onclick="goHome()">&#8592; Voltar</button>
-      <span class="eps-title" id="epsTitle"></span>
-      <span class="eps-sub" id="epsSub"></span>
+    <div class="panel-header">
+      <button class="nav-back" onclick="goHome()">&#8592; Séries</button>
+      <span class="panel-title" id="epsTitle"></span>
+      <span class="panel-sub" id="epsSub"></span>
     </div>
     <div class="eps-grid" id="epsGrid"></div>
+  </div>
+</div>
+
+<!-- PLAYER -->
+<div class="page player-page" id="pagePlayer">
+  <div class="player-wrap">
+    <div class="player-header">
+      <button class="nav-back" onclick="goEpisodes()">&#8592; Episódios</button>
+      <span class="player-title" id="playerTitle"></span>
+    </div>
+    <div class="player-box">
+      <video id="videoEl" controls autoplay></video>
+      <div class="player-error" id="playerError">
+        <span style="font-size:24px">&#9888;</span>
+        <span>Não foi possível reproduzir este episódio</span>
+      </div>
+    </div>
+    <div class="player-controls">
+      <button class="ctrl-btn prev-btn" id="btnPrev" onclick="navigate(-1)">&#8592; Anterior</button>
+      <span class="ctrl-ep-label" id="ctrlLabel"></span>
+      <button class="ctrl-btn next-btn" id="btnNext" onclick="navigate(1)">Próximo &#8594;</button>
+    </div>
   </div>
 </div>
 
@@ -243,10 +284,16 @@ const RANGES = [
 ];
 /* ════════════════════════════════════════════ */
 
-let currentFilter = "all";
-let manualFound   = [];
-let manualAborted = false;
-let manualRunning = false;
+let currentFilter  = "all";
+let manualFound    = [];
+let manualAborted  = false;
+let manualRunning  = false;
+
+// estado do player
+let playerList     = [];  // [{n, url}, ...]
+let playerIndex    = 0;
+let playerSerie    = "";
+let playerRange    = null;
 
 function pad(n, d) { return d > 0 ? String(n).padStart(d, "0") : String(n); }
 function formatSize(b) {
@@ -301,23 +348,70 @@ async function scanRange(btn, serie, range) {
 
 /* ── Painel de episódios ── */
 function openEpisodes(serieName, range, found) {
+  playerList  = found.slice().sort((a,b) => a.n - b.n);
+  playerSerie = serieName;
+  playerRange = range;
+
   document.getElementById("epsTitle").textContent = serieName + "  ·  ep " + range.from + "–" + range.to;
   document.getElementById("epsSub").textContent   = found.length + " episódio(s) disponível(is)";
 
   const grid = document.getElementById("epsGrid");
   grid.innerHTML = "";
 
-  // garante ordem numérica
-  found.sort((a, b) => a.n - b.n).forEach(({ n, url }) => {
-    const a = document.createElement("a");
-    a.className   = "ep-btn";
-    a.href        = url;
-    a.target      = "_blank";
-    a.rel         = "noopener";
-    a.textContent = "EP " + pad(n, 0);
-    grid.appendChild(a);
+  playerList.forEach(({ n, url }, idx) => {
+    const btn = document.createElement("button");
+    btn.className   = "ep-btn";
+    btn.id          = "ep-btn-" + idx;
+    btn.textContent = "EP " + pad(n, 0);
+    btn.addEventListener("click", () => openPlayer(idx));
+    grid.appendChild(btn);
   });
 
+  showPage("pageEpisodes");
+}
+
+/* ── Player ── */
+function openPlayer(idx) {
+  playerIndex = idx;
+  const { n, url } = playerList[idx];
+
+  // destaca botão ativo na lista de eps
+  document.querySelectorAll(".ep-btn").forEach((b,i) => b.classList.toggle("active-ep", i === idx));
+
+  // título
+  document.getElementById("playerTitle").textContent = playerSerie + "  ·  EP " + pad(n, 0);
+  document.getElementById("ctrlLabel").textContent   = "EP " + pad(n, 0) + " de " + playerList.length;
+
+  // botões prev/next
+  document.getElementById("btnPrev").disabled = idx === 0;
+  document.getElementById("btnNext").disabled = idx === playerList.length - 1;
+
+  // vídeo
+  const video = document.getElementById("videoEl");
+  const errorEl = document.getElementById("playerError");
+  errorEl.style.display = "none";
+  video.style.display   = "block";
+  video.src = url;
+  video.load();
+  video.play().catch(() => {});
+
+  video.onerror = () => {
+    video.style.display   = "none";
+    errorEl.style.display = "flex";
+  };
+
+  showPage("pagePlayer");
+}
+
+function navigate(dir) {
+  const next = playerIndex + dir;
+  if (next >= 0 && next < playerList.length) openPlayer(next);
+}
+
+function goEpisodes() {
+  const video = document.getElementById("videoEl");
+  video.pause();
+  video.src = "";
   showPage("pageEpisodes");
 }
 
@@ -355,6 +449,8 @@ function toggleManual() {
 
 function goHome() {
   manualAborted = true;
+  const video = document.getElementById("videoEl");
+  video.pause(); video.src = "";
   document.getElementById("btnToggleManual").classList.remove("active");
   showPage("pageHome");
 }
@@ -391,9 +487,9 @@ async function startManualScan() {
     if (res.ok) { manualFound.push(url); addManualLog(n, url, true, res.status, res.contentLength); }
     else { notFound++; addManualLog(n, url, false, res.status, null); }
     const pct = Math.round((checked/total)*100);
-    document.getElementById("sChecked").textContent   = checked;
-    document.getElementById("sFound").textContent     = manualFound.length;
-    document.getElementById("sNotFound").textContent  = notFound;
+    document.getElementById("sChecked").textContent    = checked;
+    document.getElementById("sFound").textContent      = manualFound.length;
+    document.getElementById("sNotFound").textContent   = notFound;
     document.getElementById("progressFill").style.width = pct+"%";
     document.getElementById("progressPct").textContent  = pct+"%";
     document.getElementById("progressFrac").textContent = checked+" / "+total;
@@ -413,17 +509,17 @@ function stopScan() { manualAborted = true; }
 function addManualLog(num, url, ok, status, size) {
   const empty = document.getElementById("emptyState");
   if (empty) empty.remove();
-  const item    = document.createElement("div");
-  const hide    = currentFilter !== "all" && ((currentFilter === "ok") !== ok);
-  item.className    = "log-item" + (hide ? " hidden" : "");
+  const item = document.createElement("div");
+  const hide = currentFilter !== "all" && ((currentFilter === "ok") !== ok);
+  item.className     = "log-item" + (hide ? " hidden" : "");
   item.dataset.state = ok ? "ok" : "err";
   const badge   = ok
-    ? "<span class=\"log-badge badge-ok\">"+status+"</span>"
-    : "<span class=\"log-badge badge-err\">"+(status||"ERR")+"</span>";
+    ? `<span class="log-badge badge-ok">${status}</span>`
+    : `<span class="log-badge badge-err">${status||"ERR"}</span>`;
   const urlPart = ok
-    ? "<div class=\"log-url\"><a href=\""+url+"\" target=\"_blank\" rel=\"noopener\">"+url+"</a></div>"
-    : "<div class=\"log-url err\">"+url+"</div>";
-  item.innerHTML = "<span class=\"log-num\">#"+num+"</span>"+badge+urlPart+"<span class=\"log-meta\">"+(ok&&size?formatSize(size):"")+"</span>";
+    ? `<div class="log-url"><a href="${url}" target="_blank" rel="noopener">${url}</a></div>`
+    : `<div class="log-url err">${url}</div>`;
+  item.innerHTML = `<span class="log-num">#${num}</span>${badge}${urlPart}<span class="log-meta">${ok&&size?formatSize(size):""}</span>`;
   document.getElementById("logList").appendChild(item);
   item.scrollIntoView({ block: "nearest" });
 }
@@ -432,7 +528,7 @@ function resetManual() {
   if (manualRunning) return;
   manualFound = [];
   document.getElementById("logList").innerHTML =
-    "<div class=\"log-empty\" id=\"emptyState\"><div class=\"icon\">&#8981;</div><p>configure e inicie a varredura</p></div>";
+    `<div class="log-empty" id="emptyState"><div class="icon">&#8981;</div><p>configure e inicie a varredura</p></div>`;
   document.getElementById("btnCopy").disabled = true;
   document.getElementById("resultsTitle").textContent = "aguardando";
   document.getElementById("progressFill").style.width = "0%";
