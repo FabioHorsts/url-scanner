@@ -337,7 +337,7 @@ function scanRange(btn, serie, range) {
         btn.classList.add("done-found");
         btn.querySelector(".btn-label").textContent = found.length + " encontrados";
         (function(b, s, r, f) {
-          b.onclick = function() { openEpisodes(s, r, f); };
+          b.onclick = function() { openEpisodes(s.name, r, f); };
         })(btn, serie, range, found);
       } else {
         btn.classList.add("done-empty");
