@@ -363,7 +363,7 @@ function scanRange(btn, serie, range) {
 /* ── Painel de episódios ── */
 function openEpisodes(serieName, range, found) {
   playerList  = found.slice().sort(function(a,b){ return a.n - b.n; });
-  playerSerie = Series-Name;
+  playerSerie = serieName;
   playerRange = range;
 
   el("epsTitle").textContent = serieName + "  \u00b7  ep " + range.from + "\u2013" + range.to;
