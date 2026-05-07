@@ -165,8 +165,6 @@
   <div class="player-wrap">
     <div class="player-nav-back" style="margin-bottom:0.5rem;">
       <button class="nav-back" onclick="goEpisodes()">&#8592; Episódios</button>
-    </div>
-    <div class="player-controls">
       <button class="ctrl-btn" id="btnPrev" onclick="navigate(-1)">&#8592; Anterior</button>
       <span class="ctrl-ep-label" id="ctrlLabel"></span>
       <button class="ctrl-btn" id="btnNext" onclick="navigate(1)">Próximo &#8594;</button>
@@ -414,7 +412,7 @@ function openPlayer(idx) {
     else allEpBtns[i].classList.remove("active-ep");
   }
 
-  el("ctrlLabel").textContent = playerSerie + "  ·  EP " + pad(item.n, 0) + "  (" + (idx+1) + " de " + playerList.length + ")";
+  el("ctrlLabel").textContent = playerSerie + "  ·  EP " + pad(item.n, 0);
   
   el("btnPrev").disabled = (idx === 0);
   el("btnNext").disabled = (idx === playerList.length - 1);
