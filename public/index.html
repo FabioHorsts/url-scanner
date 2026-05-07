@@ -70,7 +70,7 @@
   .player-box video{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
   .player-error{display:none;position:absolute;top:0;left:0;right:0;bottom:0;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;gap:10px;background:#000;color:#6b7080;font-family:"IBM Plex Mono",monospace;font-size:13px;}
   .player-controls{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:0.75rem;}
-  .ctrl-btn{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500;padding:10px 24px;border-radius:6px;border:1px solid #363a4a;background:#1c1f27;color:#e8eaf0;cursor:pointer;letter-spacing:.05em;}
+  .ctrl-btn{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500;padding:10px 0;width:130px;text-align:center;border-radius:6px;border:1px solid #363a4a;background:#1c1f27;color:#e8eaf0;cursor:pointer;letter-spacing:.05em;}
   .ctrl-btn:disabled{opacity:.3;cursor:default;}
   .ctrl-ep-label{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#e8eaf0;-webkit-box-flex:1;-ms-flex:1;flex:1;text-align:center;font-weight:500;}
 
@@ -165,6 +165,8 @@
   <div class="player-wrap">
     <div class="player-nav-back" style="margin-bottom:0.5rem;">
       <button class="nav-back" onclick="goEpisodes()">&#8592; Episódios</button>
+    </div>
+    <div class="player-controls">
       <button class="ctrl-btn" id="btnPrev" onclick="navigate(-1)">&#8592; Anterior</button>
       <span class="ctrl-ep-label" id="ctrlLabel"></span>
       <button class="ctrl-btn" id="btnNext" onclick="navigate(1)">Próximo &#8594;</button>
@@ -412,7 +414,7 @@ function openPlayer(idx) {
     else allEpBtns[i].classList.remove("active-ep");
   }
 
-  el("ctrlLabel").textContent = playerSerie + "  ·  EP " + pad(item.n, 0);
+  el("ctrlLabel").textContent = playerSerie + "  ·  EP " + pad(item.n, 0) + "  (" + (idx+1) + " de " + playerList.length + ")";
   
   el("btnPrev").disabled = (idx === 0);
   el("btnNext").disabled = (idx === playerList.length - 1);
