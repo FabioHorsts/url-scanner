@@ -414,7 +414,7 @@ function openPlayer(idx) {
     else allEpBtns[i].classList.remove("active-ep");
   }
 
-  el("ctrlLabel").textContent = playerSerie + "  ·  EP " + pad(item.n, 0) + "  (" + (idx+1) + " de " + playerList.length + ")";
+  el("ctrlLabel").textContent = playerSerie + "  ·  EP " + pad(item.n, 0);
   
   el("btnPrev").disabled = (idx === 0);
   el("btnNext").disabled = (idx === playerList.length - 1);
